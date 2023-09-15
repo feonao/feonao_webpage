@@ -1,0 +1,123 @@
+﻿@page "/player"
+@page "/"
+@inject IJSRuntime JS
+
+<PageTitle>@PageTitleName</PageTitle>
+
+<h1>Now playing: @CurrentTrackName</h1>
+
+<div class="card">
+    <audio id="audioPlayer"
+           controls="controls"
+           src="@SongPath"
+           autoplay
+           @onended="TrackEndedEvent"
+           @onplay="PausePlayEvent"
+           @onpause="PausePlayEvent">
+    </audio>
+</div>
+
+@if (TrackList != null)
+{
+    <ul class="list-group list-group-flush">
+        @foreach (var track in TrackList)
+        {
+            <li class="list-group-item">
+                <span onclick="@(() => ChangeSong(track))"
+              class="@track.State" role="button">
+                </span>
+                @(TrackList.IndexOf(track) + 1).
+                @track.Name
+            </li>
+        }
+    </ul>
+}
+
+@code
+{
+    #region [Private fields]
+    private readonly string musicFolderPath = "/music";
+    private List<Sound> _trackList = new();
+    private Sound? _currentTrack;
+    #endregion
+
+    #region [Initialization]
+    protected override void OnInitialized()
+    {
+        TrackList.Add(new Sound("feonao - City Lights", $"{musicFolderPath}/{"feonao - City Lights.mp3"}"));
+        TrackList.Add(new Sound("feonao - Panel House", $"{musicFolderPath}/{"feonao - Panel House.mp3"}"));
+        TrackList.Add(new Sound("feonao - New Genesis Red Army", $"{musicFolderPath}/{"feonao - New Genesis Red Army.mp3"}"));
+        TrackList.Add(new Sound("feonao - Ass Naked Hardcore", $"{musicFolderPath}/{"feonao - Ass Naked Hardcore.mp3"}"));
+        TrackList.Add(new Sound("feonao - Overheat", $"{musicFolderPath}/{"feonao - Overheat.mp3"}"));
+    }
+    #endregion
+
+    #region [Properties]
+    public string? SongPath
+    {
+        get { return CurrentTrack != null ? CurrentTrack.Url : ""; }
+    }
+
+    public List<Sound> TrackList
+    {
+        get { return _trackList; }
+        set { _trackList = value; }
+    }
+
+    public Sound? CurrentTrack
+    {
+        get { return _currentTrack; }
+        set { _currentTrack = value; }
+    }
+
+    public string CurrentTrackName
+    {
+        get { return CurrentTrack != null ? CurrentTrack.Name : "—"; }
+    }
+
+    public string PageTitleName
+    {
+        get { return CurrentTrack != null ? $"> {CurrentTrack.Name}" : "Listen to feonao"; }
+    }
+    #endregion
+
+    #region [Events]
+    private async void ChangeSong(Sound track)
+    {
+        if (CurrentTrack == track)
+            await JS.InvokeAsync<object>("changePlayerState");
+        else
+            CurrentTrack = TrackList.Where(sound => sound == track).FirstOrDefault();
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public async void PausePlayEvent()
+    {
+        foreach (Sound sound in TrackList)
+        {
+            if (sound == CurrentTrack)
+                sound.ChangeState();
+            else
+                sound.SetPlay();
+        }
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public async void TrackEndedEvent()
+    {
+        int nextTrackNum = 0;
+
+        if (CurrentTrack != null && TrackList.Contains(CurrentTrack))
+            nextTrackNum = TrackList.IndexOf(CurrentTrack) + 1;
+
+        if (nextTrackNum != 0 && TrackList.Count > nextTrackNum)
+            CurrentTrack = TrackList[nextTrackNum];
+        else
+            CurrentTrack = null;
+
+        await InvokeAsync(StateHasChanged);
+    }
+    #endregion
+}
