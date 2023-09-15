@@ -52,9 +52,9 @@
     protected override async void OnInitialized()
     {
         TrackList = await Http.GetFromJsonAsync<List<Sound>>("playlist_main.json") ?? new();
-        CurrentTrack = TrackList[0];
+        //CurrentTrack = TrackList[0];
 
-        await JS.InvokeAsync<object>("changePlayerState");
+        //await JS.InvokeAsync<object>("changePlayerState");
         await InvokeAsync(StateHasChanged);
     }
     #endregion
