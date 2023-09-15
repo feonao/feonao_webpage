@@ -9,10 +9,13 @@
         public string Url { get; set; }
         public string? State { get; set; }
 
+        public string Artwork { get; set; }
+
         public Sound(string name, string url)
         {
             Name = name;
             Url = url;
+            Artwork = "";
             SetPlay();
         }
 

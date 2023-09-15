@@ -4,35 +4,40 @@
 @inject HttpClient Http
 
 <PageTitle>@PageTitleName</PageTitle>
+<div class="center">
+    <img src="@CurrentArtwork" class="fit" />
+</div>
 
 <h1>Now playing: @CurrentTrackName</h1>
 
-<div class="card">
-    <audio id="audioPlayer"
-           controls="controls"
-           src="@SongPath"
-           autoplay
-           @onended="TrackEndedEvent"
-           @onplay="PausePlayEvent"
-           @onpause="PausePlayEvent">
-    </audio>
-</div>
-
-@if (TrackList != null)
-{
-    <ul class="list-group list-group-flush">
-        @foreach (var track in TrackList)
-        {
+<div class="center">
+    @if (TrackList != null)
+    {
+        <ul class="list-group list-group-flush">
             <li class="list-group-item">
-                <span onclick="@(() => ChangeSong(track))"
-              class="@track.State" role="button">
-                </span>
-                @(TrackList.IndexOf(track) + 1).
-                @track.Name
+                <audio id="audioPlayer"
+                    controls="controls"
+                    src="@SongPath"
+                    autoplay
+                    @onended="TrackEndedEvent"
+                    @onplay="PausePlayEvent"
+                    @onpause="PausePlayEvent">
+                </audio>
             </li>
-        }
-    </ul>
-}
+
+            @foreach (var track in TrackList)
+            {
+                <li class="list-group-item">
+                    <span onclick="@(() => ChangeSong(track))"
+                  class="@track.State" role="button">
+                    </span>
+                    @(TrackList.IndexOf(track) + 1).
+                    @track.Name
+                </li>
+            }
+        </ul>
+    }
+</div>
 
 @code
 {
@@ -46,7 +51,9 @@
     protected override async void OnInitialized()
     {
         TrackList = await Http.GetFromJsonAsync<List<Sound>>("playlist_main.json") ?? new();
+        CurrentTrack = TrackList[0];
 
+        await JS.InvokeAsync<object>("changePlayerState");
         await InvokeAsync(StateHasChanged);
     }
     #endregion
@@ -77,6 +84,11 @@
     public string PageTitleName
     {
         get { return CurrentTrack != null ? $"> {CurrentTrack.Name}" : "Listen to feonao"; }
+    }
+
+    public string CurrentArtwork
+    {
+        get { return CurrentTrack != null ? CurrentTrack.Artwork : ""; }
     }
     #endregion
 

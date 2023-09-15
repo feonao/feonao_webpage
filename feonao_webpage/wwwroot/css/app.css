@@ -1,8 +1,15 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
-html, body {
+body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-color: lightblue;
+    background-color: #0093E9;
+    background-image: linear-gradient(90deg, #0093E9 0%, #80D0C7 100%);
+}
+
+audio {
+    width: 100%;
+    background-color: white;
+    line-height: 0em;
 }
 
 h1 {
@@ -10,7 +17,7 @@ h1 {
     text-align: center;
 }
 
-p, li {
+p, li, ul {
     font-family: verdana;
     font-size: 20px;
 }
@@ -110,3 +117,13 @@ a, .btn-link {
     .loading-progress-text:after {
         content: var(--blazor-load-percentage-text, "Loading");
     }
+
+.center {
+    margin: auto;
+    width: 50%;
+}
+
+.fit {
+    margin: auto;
+    width: 100%;
+}
