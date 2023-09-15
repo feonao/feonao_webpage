@@ -19,6 +19,7 @@
                     controls="controls"
                     src="@SongPath"
                     autoplay
+                    controlsList="noplaybackrate nodownload"
                     @onended="TrackEndedEvent"
                     @onplay="PausePlayEvent"
                     @onpause="PausePlayEvent">
