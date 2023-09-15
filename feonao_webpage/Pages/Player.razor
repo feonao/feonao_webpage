@@ -1,6 +1,7 @@
 ﻿@page "/player"
 @page "/"
 @inject IJSRuntime JS
+@inject HttpClient Http
 
 <PageTitle>@PageTitleName</PageTitle>
 
@@ -42,13 +43,11 @@
     #endregion
 
     #region [Initialization]
-    protected override void OnInitialized()
+    protected override async void OnInitialized()
     {
-        TrackList.Add(new Sound("feonao - City Lights", $"{musicFolderPath}/{"feonao - City Lights.mp3"}"));
-        TrackList.Add(new Sound("feonao - Panel House", $"{musicFolderPath}/{"feonao - Panel House.mp3"}"));
-        TrackList.Add(new Sound("feonao - New Genesis Red Army", $"{musicFolderPath}/{"feonao - New Genesis Red Army.mp3"}"));
-        TrackList.Add(new Sound("feonao - Ass Naked Hardcore", $"{musicFolderPath}/{"feonao - Ass Naked Hardcore.mp3"}"));
-        TrackList.Add(new Sound("feonao - Overheat", $"{musicFolderPath}/{"feonao - Overheat.mp3"}"));
+        TrackList = await Http.GetFromJsonAsync<List<Sound>>("playlist_main.json") ?? new();
+
+        await InvokeAsync(StateHasChanged);
     }
     #endregion
 
