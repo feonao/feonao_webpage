@@ -1,14 +1,18 @@
-﻿@page "/player"
+﻿@page "/music"
 @page "/"
 @inject IJSRuntime JS
 @inject HttpClient Http
 
 <PageTitle>@PageTitleName</PageTitle>
 <div class="center">
-    <img src="@CurrentArtwork" class="fit" />
+    <img src="@CurrentTrackArtwork" class="fit" />
 </div>
 
+<br />
 <h1>Now playing: @CurrentTrackName</h1>
+<p>Platform: @CurrentTrackPlatform</p>
+<p>Year: @CurrentTrackYear</p>
+<br />
 
 <div class="center">
     @if (TrackList != null)
@@ -87,7 +91,17 @@
         get { return CurrentTrack != null ? $"> {CurrentTrack.Name}" : "Listen to feonao"; }
     }
 
-    public string CurrentArtwork
+    public string CurrentTrackPlatform
+    {
+        get { return CurrentTrack != null ? CurrentTrack.Platform : "—"; }
+    }
+
+    public string CurrentTrackYear
+    {
+        get { return CurrentTrack != null ? CurrentTrack.Year : "—"; }
+    }
+
+    public string CurrentTrackArtwork
     {
         get { return CurrentTrack != null ? CurrentTrack.Artwork : ""; }
     }

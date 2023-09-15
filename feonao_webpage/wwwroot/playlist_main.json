@@ -2,26 +2,36 @@
   {
     "Url": "/music/feonao - City Lights.mp3",
     "Name": "feonao - City Lights",
-    "Artwork": "/images/a1738931678_10.jpg"
+    "Artwork": "/images/a1738931678_10.jpg",
+    "Platform": "Nanoloop 2.8",
+    "Year": "2022"
   },
   {
     "Url": "/music/feonao - Panel House.mp3",
     "Name": "feonao - Panel House",
-    "Artwork": "/images/a2777783293_10.jpg"
+    "Artwork": "/images/a2777783293_10.jpg",
+    "Platform": "Nanoloop 2.8",
+    "Year": "2021"
   },
   {
     "Url": "/music/feonao - New Genesis Red Army.mp3",
     "Name": "feonao - New Genesis Red Army",
-    "Artwork": "/images/a3815761133_10.jpg"
+    "Artwork": "/images/a3815761133_10.jpg",
+    "Platform": "LSDJ 7.8.8",
+    "Year": "2021"
   },
   {
     "Url": "/music/feonao - Ass Naked Hardcore.mp3",
     "Name": "feonao - Ass Naked Hardcore",
-    "Artwork": "/images/a3815761133_10.jpg"
+    "Artwork": "/images/a3815761133_10.jpg",
+    "Platform": "LSDJ 7.8.8",
+    "Year": "2021"
   },
   {
     "Url": "/music/feonao - Overheat.mp3",
     "Name": "feonao - Overheat",
-    "Artwork": "/images/a0081436643_10.jpg"
+    "Artwork": "/images/a0081436643_10.jpg",
+    "Platform": "Nanoloop 2.8 + LSDJ 9.2.L",
+    "Year": "2021"
   }
 ]

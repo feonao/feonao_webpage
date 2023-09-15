@@ -10,6 +10,8 @@
         public string? State { get; set; }
 
         public string Artwork { get; set; }
+        public string Platform { get; set; }
+        public string Year { get; set; }
 
         public Sound(string name, string url)
         {
