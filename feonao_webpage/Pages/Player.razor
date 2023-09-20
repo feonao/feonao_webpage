@@ -9,17 +9,18 @@
 </div>
 
 <br />
-<h1>Now playing: @CurrentTrackName</h1>
-<p>Platform: @CurrentTrackPlatform</p>
-<p>Year: @CurrentTrackYear</p>
+<h1 class="h1center">Now playing: @CurrentTrackName</h1>
+<p class="pcenter">Platform: @CurrentTrackPlatform</p>
+<p class ="pcenter">Year: @CurrentTrackYear</p>
 <br />
 
 <div class="center">
     @if (TrackList != null)
     {
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <audio id="audioPlayer"
+        <ul class="li-ul_center list-group list-group-flush">
+            <li class="li-ul_center list-group-item">
+                <audio class="audiocenter"
+                    id="audioPlayer"
                     controls="controls"
                     src="@SongPath"
                     autoplay
@@ -32,7 +33,7 @@
 
             @foreach (var track in TrackList)
             {
-                <li class="list-group-item">
+                <li class="li-ul_center list-group-item">
                     <span onclick="@(() => ChangeSong(track))"
                   class="@track.State" role="button">
                     </span>
