@@ -29,5 +29,20 @@
     </div>
 
     <script src="_framework/blazor.server.js"></script>
+
+    <script>
+        function changePlayerState() {
+            var player;
+
+            player = document.getElementById('audioPlayer');
+
+            if (player.paused) {
+                player.play();
+            }
+            else {
+                player.pause();
+            }
+        }
+    </script>
 </body>
 </html>
