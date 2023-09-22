@@ -1,7 +1,7 @@
 ﻿@page "/music"
 @page "/"
 @inject IJSRuntime JS
-@inject HttpClient Http
+@inject IHostEnvironment _env
 
 <PageTitle>@PageTitleName</PageTitle>
 
@@ -63,7 +63,12 @@
     #region [Initialization]
     protected override async void OnInitialized()
     {
-        TrackList = await Http.GetFromJsonAsync<List<Sound>>("playlist_main.json") ?? new();
+        HttpClient http = new();
+
+        //string path = new Uri(_env.ContentRootPath).AbsolutePath + "playlist_main.json";
+
+        string path = Path.Combine(_env.ContentRootPath, "wwwroot", "playlist_main.json");
+        TrackList = await http.GetFromJsonAsync<List<Sound>>(path) ?? new();
         //CurrentTrack = TrackList[0];
 
         //await JS.InvokeAsync<object>("changePlayerState");
