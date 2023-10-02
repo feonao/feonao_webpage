@@ -20,12 +20,37 @@ body {
     height: 1.1em;
 }
 
+.h1article {
+font-size: 25px;
+font-family: verdana;
+color: black;
+text-align: center;
+height: 1.1em;
+}
+
 .pcenter {
     color: white;
     text-align: center;
     font-family: verdana;
     font-size: 20px;
     height: 0.8em;
+}
+
+.pfill {
+    margin: 0.5em;
+    color: black;
+    text-align: justify-all;
+    font-family: verdana;
+    font-size: 20px;
+    width: 100%;
+    height: contain;
+}
+
+.copyright {
+    color: black;
+    text-align: center;
+    font-family: verdana;
+    font-size: 15px;
 }
 
 .li-ul_center {
@@ -145,6 +170,11 @@ a, .btn-link {
     right: 0;
 }
 
+.fill {
+    margin: auto;
+    width: 100%;
+}
+
 .fitText {
     margin: auto;
     width: 100px;
@@ -181,5 +211,10 @@ iframe {
     outline: 5px solid grey;
     width: 100%;
     padding-top: 100%;
+    position: relative;
+}
+
+.divMain {
+    width: 100%;
     position: relative;
 }
