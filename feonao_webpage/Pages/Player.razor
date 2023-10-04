@@ -36,10 +36,14 @@
 
                 @foreach (var track in TrackList)
                 {
-                    <li class="li-ul_center list-group-item">
-                        <span onclick="@(() => ChangeSong(track))"
-                        class="@track.State" role="button">
+                    <li class="li-ul_center list-group-item" 
+                        role="button" 
+                        onclick="@(() => ChangeSong(track))">
+
+                        <span 
+                            class="@track.State">
                         </span>
+
                         @(TrackList.IndexOf(track) + 1).
                         @track.Name
                     </li>
