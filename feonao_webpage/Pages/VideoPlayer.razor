@@ -1,0 +1,84 @@
+﻿@page "/video"
+
+<PageTitle>Videos</PageTitle>
+
+<div class="row">
+    <div class="column" style="background-color:black">
+        <iframe src="@CurrentPath" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="column" style="background-color:white">
+        @if (TrackList != null)
+        {
+            <ul class="li-ul_center list-group list-group-flush">
+                @foreach (var video in TrackList)
+                {
+                    <li class="li-ul_center list-group-item @BackgroundColor(video)"
+                        role="button"
+                        onclick="@(() => ChangeVideo(video))">
+
+                        @(TrackList.IndexOf(video) + 1).
+                        @video.Name
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+</div>
+
+<br />
+
+<p class="copyright">Copyright ©2023 feonao. All rights reserved.</p>
+
+@code {
+    private List<Video> _trackList = new();
+    private Video? _currentVideo;
+
+    protected override async void OnInitialized()
+    {
+        FileStream jsonStream = File.OpenRead("wwwroot/videolist_main.json");
+
+        TrackList = await JsonSerializer.DeserializeAsync<List<Video>>(jsonStream) ?? new();
+
+        CurrentVideo = TrackList.FirstOrDefault();
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public List<Video> TrackList
+    {
+        get { return _trackList; }
+        set { _trackList = value; }
+    }
+
+    public Video? CurrentVideo
+    {
+        get { return _currentVideo; }
+        set { _currentVideo = value; }
+    }
+
+    public String CurrentPath
+    {
+        get { return CurrentVideo != null ? CurrentVideo.Url : ""; }
+    }
+
+    public String BackgroundColor(Video video)
+    {
+        if (video == CurrentVideo)
+        {
+            return "bg-secondary";
+        }
+        else
+        {
+            return "bg-white";
+        }
+    }
+
+    private async void ChangeVideo(Video video)
+    {
+        CurrentVideo = TrackList.Where(media => media == video).FirstOrDefault();
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+
+}
