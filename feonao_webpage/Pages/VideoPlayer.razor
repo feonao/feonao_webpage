@@ -12,7 +12,7 @@
             <ul class="li-ul_center list-group list-group-flush">
                 @foreach (var video in TrackList)
                 {
-                    <li class="li-ul_center list-group-item @BackgroundColor(video)"
+                    <li class="li-ul_center list-group-item @BackgroundTextColor(video) @BackgroundColor(video)"
                         role="button"
                         onclick="@(() => ChangeVideo(video))">
 
@@ -30,9 +30,12 @@
 <p class="copyright">Copyright ©@DateTime.Now.Year feonao. All rights reserved.</p>
 
 @code {
+    #region [Private fields]
     private List<Video> _trackList = new();
     private Video? _currentVideo;
+    #endregion
 
+    #region [Initialization]
     protected override async void OnInitialized()
     {
         FileStream jsonStream = File.OpenRead("wwwroot/videolist_main.json");
@@ -43,7 +46,9 @@
 
         await InvokeAsync(StateHasChanged);
     }
+    #endregion
 
+    #region [Properties]
     public List<Video> TrackList
     {
         get { return _trackList; }
@@ -60,17 +65,17 @@
     {
         get { return CurrentVideo != null ? CurrentVideo.Url : ""; }
     }
+    #endregion
 
-    public String BackgroundColor(Video video)
+    #region [Methods]
+    private String BackgroundColor(Video video)
     {
-        if (video == CurrentVideo)
-        {
-            return "bg-secondary";
-        }
-        else
-        {
-            return "bg-white";
-        }
+        return video.BackgroundColor(video == CurrentVideo);
+    }
+
+    private String BackgroundTextColor(Video video)
+    {
+        return video.BackgroundTextColor(video == CurrentVideo);
     }
 
     private async void ChangeVideo(Video video)
@@ -79,6 +84,5 @@
 
         await InvokeAsync(StateHasChanged);
     }
-
-
+    #endregion
 }

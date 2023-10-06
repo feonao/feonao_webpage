@@ -36,7 +36,7 @@
 
                 @foreach (var track in TrackList)
                 {
-                    <li class="li-ul_center list-group-item" 
+                    <li class="li-ul_center list-group-item @BackgroundTextColor(track) @BackgroundColor(track)"
                         role="button" 
                         onclick="@(() => ChangeSong(track))">
 
@@ -157,6 +157,17 @@
             CurrentTrack = null;
 
         await InvokeAsync(StateHasChanged);
+    }
+    #endregion
+    #region [Methods]
+    private String BackgroundColor(Sound track)
+    {
+        return track.BackgroundColor(track == CurrentTrack);
+    }
+
+    private String BackgroundTextColor(Sound track)
+    {
+        return track.BackgroundTextColor(track == CurrentTrack);
     }
     #endregion
 }
