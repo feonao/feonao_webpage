@@ -49,6 +49,11 @@ body {
     height: contain;
 }
 
+.spannav {
+    width: 15px;
+    text-align: center;
+}
+
 .copyright {
     color: black;
     text-align: center;
