@@ -148,6 +148,8 @@
 
     public async void PausePlayEvent()
     {
+        IsAutoplay = await SetAutoplayAsync(true);
+
         foreach (Sound sound in TrackList)
         {
             if (sound == CurrentTrack && IsAutoplay)
@@ -155,8 +157,6 @@
             else
                 sound.SetPlay();
         }
-
-        IsAutoplay = await SetAutoplayAsync(true);
 
         await InvokeAsync(StateHasChanged);
     }
