@@ -22,32 +22,15 @@
         {
             <ul class="li-ul_center list-group list-group-flush">
                 <li class="li-ul_center list-group-item">
-                    @if (IsAutoplay)
-                    {
-                        <audio class="audiocenter"
-                               id="audioPlayer"
-                               controls="controls"
-                               src="@SongPath"
-                               autoplay
-                               controlsList="noplaybackrate nodownload"
-                               @onended="TrackEndedEvent"
-                               @onplay="PausePlayEvent"
-                               @onpause="PausePlayEvent">
-                        </audio>
-                    }
-                    else
-                    {
-                        <audio class="audiocenter"
-                               id="audioPlayer"
-                               controls="controls"
-                               src="@SongPath"
-                               controlsList="noplaybackrate nodownload"
-                               @onended="TrackEndedEvent"
-                               @onplay="PausePlayEvent"
-                               @onpause="PausePlayEvent">
-                        </audio>
-                    }
-                    
+                    <audio class="audiocenter"
+                            id="audioPlayer"
+                            controls="controls"
+                            src="@SongPath"
+                            controlsList="noplaybackrate nodownload"
+                            @onended="TrackEndedEvent"
+                            @onplay="PausePlayEvent"
+                            @onpause="PausePlayEvent">
+                    </audio>
                 </li>
 
                 @foreach (var track in TrackList)
@@ -116,7 +99,7 @@
     public bool IsAutoplay
     {
         get { return _isAutoplay; }
-        set { _isAutoplay = value; }
+        set {  _isAutoplay = value; }
     }
 
     public string CurrentTrackName
@@ -148,10 +131,17 @@
     #region [Events]
     private async void ChangeSong(Sound track)
     {
+        if (!IsAutoplay)
+            IsAutoplay = await SetAutoplayAsync(true);
+
         if (CurrentTrack == track)
-            await JS.InvokeAsync<object>("changePlayerState");
+        {
+            await JS.InvokeAsync<object>("ChangePlayerState");
+        }
         else
+        {
             CurrentTrack = TrackList.Where(sound => sound == track).FirstOrDefault();
+        }
 
         await InvokeAsync(StateHasChanged);
     }
@@ -166,7 +156,7 @@
                 sound.SetPlay();
         }
 
-        IsAutoplay = true;
+        IsAutoplay = await SetAutoplayAsync(true);
 
         await InvokeAsync(StateHasChanged);
     }
@@ -184,7 +174,7 @@
         }
         else
         {
-            IsAutoplay = false;
+            IsAutoplay = await SetAutoplayAsync(false);
 
             await InvokeAsync(StateHasChanged);
 
@@ -204,6 +194,13 @@
     private String BackgroundTextColor(Sound track)
     {
         return track.BackgroundTextColor(track == CurrentTrack);
+    }
+
+    private async Task<bool> SetAutoplayAsync(bool isAutoplay)
+    {
+        await JS.InvokeAsync<object>("SetAutoPlay", isAutoplay);
+
+        return isAutoplay;
     }
     #endregion
 }
