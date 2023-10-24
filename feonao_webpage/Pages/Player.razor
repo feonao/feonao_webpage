@@ -18,7 +18,7 @@
         <br />
     </div>
     <div class="column" style="background-color:white">
-        @if (TrackList != null)
+        @if (TrackList != null && IsTrackListLoaded)
         {
             <ul class="li-ul_center list-group list-group-flush">
                 <li class="li-ul_center list-group-item">
@@ -31,7 +31,7 @@
                             @onpause="PausePlayEvent">
                     </audio>
                 </li>
-
+            
                 @foreach (var track in TrackList)
                 {
                     <li class="li-ul_center list-group-item @BackgroundTextColor(track) @BackgroundColor(track)"
@@ -46,7 +46,14 @@
                         @track.Name
                     </li>
                 }
+            
             </ul>
+        }
+        else
+        {
+            <br />
+            <div class="h1center"><div class="lds-dual-ring"></div></div>
+            <div class="h1article">Loading...</div>
         }
     </div>
 </div>
@@ -62,6 +69,7 @@
     private List<Sound> _trackList = new();
     private Sound? _currentTrack;
     private bool _isAutoplay;
+    private bool _isTrackListLoaded;
     #endregion
 
     #region [Initialization]
@@ -80,7 +88,11 @@
         {
             FileStream jsonStream = File.OpenRead("wwwroot/playlist_main.json");
 
+            //Thread.Sleep(1000);
+
             TrackList = await JsonSerializer.DeserializeAsync<List<Sound>>(jsonStream) ?? new();
+
+            IsTrackListLoaded = true;
 
             CurrentTrack = await SetCurrentTrackAsync(TrackList.FirstOrDefault());
 
@@ -99,6 +111,12 @@
     {
         get { return _trackList; }
         set { _trackList = value; }
+    }
+
+    public bool IsTrackListLoaded
+    {
+        get { return _isTrackListLoaded; }
+        set { _isTrackListLoaded = value; }
     }
 
     public Sound? CurrentTrack
