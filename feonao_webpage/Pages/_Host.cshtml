@@ -57,6 +57,14 @@
 
             player.autoplay = isEnabled;
         }
+
+        function SetSrc(path) {
+            var player;
+
+            player = document.getElementById('audioPlayer');
+            player.src = path;
+            preload = true;
+        }
     </script>
 </body>
 </html>

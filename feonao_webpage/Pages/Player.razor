@@ -25,7 +25,6 @@
                     <audio class="audiocenter"
                             id="audioPlayer"
                             controls="controls"
-                            src="@SongPath"
                             controlsList="noplaybackrate nodownload"
                             @onended="TrackEndedEvent"
                             @onplay="PausePlayEvent"
@@ -68,21 +67,22 @@
     #region [Initialization]
     protected override async void OnInitialized()
     {
+
         FileStream jsonStream = File.OpenRead("wwwroot/playlist_main.json");
 
         TrackList = await JsonSerializer.DeserializeAsync<List<Sound>>(jsonStream) ?? new();
 
-        CurrentTrack = TrackList.FirstOrDefault();
-
         await InvokeAsync(StateHasChanged);
+
+        //CurrentTrack = await SetCurrentTrackAsync(TrackList.FirstOrDefault());
     }
     #endregion
 
     #region [Properties]
-    public string? SongPath
-    {
-        get { return CurrentTrack != null ? CurrentTrack.Url : ""; }
-    }
+    // public string? SongPath
+    // {
+    //     get { return CurrentTrack != null ? CurrentTrack.Url : ""; }
+    // }
 
     public List<Sound> TrackList
     {
@@ -136,11 +136,11 @@
 
         if (CurrentTrack == track)
         {
-            await JS.InvokeAsync<object>("ChangePlayerState");
+            await JS.InvokeVoidAsync("ChangePlayerState", CurrentTrack.Url);
         }
         else
         {
-            CurrentTrack = TrackList.Where(sound => sound == track).FirstOrDefault();
+            CurrentTrack = await SetCurrentTrackAsync(TrackList.Where(sound => sound == track).FirstOrDefault());
         }
 
         await InvokeAsync(StateHasChanged);
@@ -170,7 +170,7 @@
 
         if (nextTrackNum != 0 && TrackList.Count > nextTrackNum)
         {
-            CurrentTrack = TrackList[nextTrackNum];
+            CurrentTrack = await SetCurrentTrackAsync(TrackList[nextTrackNum]);
         }
         else
         {
@@ -178,7 +178,7 @@
 
             await InvokeAsync(StateHasChanged);
 
-            CurrentTrack = TrackList.FirstOrDefault();
+            CurrentTrack = await SetCurrentTrackAsync(TrackList.FirstOrDefault());
         }
 
         await InvokeAsync(StateHasChanged);
@@ -198,9 +198,17 @@
 
     private async Task<bool> SetAutoplayAsync(bool isAutoplay)
     {
-        await JS.InvokeAsync<object>("SetAutoPlay", isAutoplay);
+        await JS.InvokeVoidAsync("SetAutoPlay", isAutoplay);
 
         return isAutoplay;
+    }
+
+    private async Task<Sound?> SetCurrentTrackAsync(Sound? track)
+    {
+        if (track != null)
+            await JS.InvokeVoidAsync("SetSrc", track.Url);
+
+        return track;
     }
     #endregion
 }
