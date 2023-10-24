@@ -18,8 +18,7 @@
         <br />
     </div>
     <div class="column" style="background-color:white">
-        @if (TrackList != null && IsTrackListLoaded)
-        {
+        
             <ul class="li-ul_center list-group list-group-flush">
                 <li class="li-ul_center list-group-item">
                     <audio class="audiocenter"
@@ -31,7 +30,8 @@
                             @onpause="PausePlayEvent">
                     </audio>
                 </li>
-            
+            @if (TrackList != null && IsTrackListLoaded)
+            {
                 @foreach (var track in TrackList)
                 {
                     <li class="li-ul_center list-group-item @BackgroundTextColor(track) @BackgroundColor(track)"
@@ -46,15 +46,14 @@
                         @track.Name
                     </li>
                 }
-            
+            }
+            else
+            {
+                <li />
+                <li class="h1center"><div class="lds-dual-ring"></div></li>
+                <li class="h1article">Loading...</li>
+            }
             </ul>
-        }
-        else
-        {
-            <br />
-            <div class="h1center"><div class="lds-dual-ring"></div></div>
-            <div class="h1article">Loading...</div>
-        }
     </div>
 </div>
 
