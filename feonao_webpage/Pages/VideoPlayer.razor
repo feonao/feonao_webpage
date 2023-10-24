@@ -36,15 +36,29 @@
     #endregion
 
     #region [Initialization]
-    protected override async void OnInitialized()
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     FileStream jsonStream = File.OpenRead("wwwroot/videolist_main.json");
+
+    //     TrackList = await JsonSerializer.DeserializeAsync<List<Video>>(jsonStream) ?? new();
+
+    //     CurrentVideo = TrackList.FirstOrDefault();
+
+    //     await InvokeAsync(StateHasChanged);
+    // }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        FileStream jsonStream = File.OpenRead("wwwroot/videolist_main.json");
+        if (firstRender)
+        {
+            FileStream jsonStream = File.OpenRead("wwwroot/videolist_main.json");
 
-        TrackList = await JsonSerializer.DeserializeAsync<List<Video>>(jsonStream) ?? new();
+            TrackList = await JsonSerializer.DeserializeAsync<List<Video>>(jsonStream) ?? new();
 
-        CurrentVideo = TrackList.FirstOrDefault();
+            CurrentVideo = TrackList.FirstOrDefault();
 
-        await InvokeAsync(StateHasChanged);
+            await InvokeAsync(StateHasChanged);
+        }
     }
     #endregion
 

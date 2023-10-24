@@ -65,16 +65,27 @@
     #endregion
 
     #region [Initialization]
-    protected override async void OnInitialized()
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     FileStream jsonStream = File.OpenRead("wwwroot/playlist_main.json");
+
+    //     TrackList = await JsonSerializer.DeserializeAsync<List<Sound>>(jsonStream) ?? new();
+
+    //     await InvokeAsync(StateHasChanged);
+    // }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        if (firstRender)
+        {
+            FileStream jsonStream = File.OpenRead("wwwroot/playlist_main.json");
 
-        FileStream jsonStream = File.OpenRead("wwwroot/playlist_main.json");
+            TrackList = await JsonSerializer.DeserializeAsync<List<Sound>>(jsonStream) ?? new();
 
-        TrackList = await JsonSerializer.DeserializeAsync<List<Sound>>(jsonStream) ?? new();
+            CurrentTrack = await SetCurrentTrackAsync(TrackList.FirstOrDefault());
 
-        await InvokeAsync(StateHasChanged);
-
-        //CurrentTrack = await SetCurrentTrackAsync(TrackList.FirstOrDefault());
+            await InvokeAsync(StateHasChanged);
+        }
     }
     #endregion
 

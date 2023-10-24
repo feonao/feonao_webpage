@@ -62,8 +62,11 @@
             var player;
 
             player = document.getElementById('audioPlayer');
-            player.src = path;
-            preload = true;
+
+            if (player !== null) {
+                player.src = path;
+                player.preload = 'metadata';
+            }
         }
     </script>
 </body>
