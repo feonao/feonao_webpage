@@ -242,7 +242,7 @@ iframe {
         margin: 8px;
         border-radius: 50%;
         border: 6px solid black;
-        border-color: black transparent black transparent;
+        border-color: darkgrey transparent darkgrey transparent;
         animation: lds-dual-ring 1.2s linear infinite;
     }
 

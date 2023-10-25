@@ -51,7 +51,7 @@
             {
                 <li />
                 <li class="h1center"><div class="lds-dual-ring"></div></li>
-                <li class="h1article">Loading...</li>
+                <li class="h1article text-secondary">Loading...</li>
             }
             </ul>
     </div>
@@ -87,7 +87,7 @@
         {
             FileStream jsonStream = File.OpenRead("wwwroot/playlist_main.json");
 
-            //Thread.Sleep(1000);
+            //Thread.Sleep(50);
 
             TrackList = await JsonSerializer.DeserializeAsync<List<Sound>>(jsonStream) ?? new();
 
