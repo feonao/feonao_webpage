@@ -159,9 +159,6 @@
     #region [Events]
     private async void ChangeSong(Sound track)
     {
-        if (!IsAutoplay)
-            IsAutoplay = await SetAutoplayAsync(true);
-
         if (CurrentTrack == track)
         {
             await JS.InvokeVoidAsync("ChangePlayerState", CurrentTrack.Url);
@@ -170,6 +167,10 @@
         {
             CurrentTrack = await SetCurrentTrackAsync(TrackList.Where(sound => sound == track).FirstOrDefault());
         }
+
+        if (!IsAutoplay)
+            IsAutoplay = await SetAutoplayAsync(true);
+
 
         await InvokeAsync(StateHasChanged);
     }
