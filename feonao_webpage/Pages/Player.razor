@@ -4,51 +4,58 @@
 
 <PageTitle>@PageTitleName</PageTitle>
 
-<div class="row">
-    <div class="column" style="background-color:black">
-        <div class="divBorder">
-            <p class="fitText">No image</p>
-            <img src="@CurrentTrackArtwork" class="fit" />
-        </div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg p-2" style="background-color:black">
+            <div class="divBorder">
+                <p class="fitText">No image</p>
+                <img src="@CurrentTrackArtwork" class="fit" />
+            </div>
         
-        <br />
-        <h1 class="h1center">@CurrentTrackName</h1>
-        <p class="pcenter">Platform: @CurrentTrackPlatform</p>
-        <p class="pcenter">Year: @CurrentTrackYear</p>
-        <br />
-    </div>
-    <div class="column" style="background-color:white">
-        @if (TrackList != null)
-        {
-            <ul class="li-ul_center list-group list-group-flush">
-                <li class="li-ul_center list-group-item">
-                    <audio class="audiocenter"
-                            id="audioPlayer"
-                            controls="controls"
-                            src="@SongPath"
-                            controlsList="noplaybackrate nodownload"
-                            @onended="TrackEndedEvent"
-                            @onplay="PausePlayEvent"
-                            @onpause="PausePlayEvent">
-                    </audio>
-                </li>
-
-                @foreach (var track in TrackList)
-                {
-                    <li class="li-ul_center list-group-item @BackgroundTextColor(track) @BackgroundColor(track)"
-                        role="button" 
-                        onclick="@(() => ChangeSong(track))">
-
-                        <span 
-                            class="@track.State">
-                        </span>
-
-                        @(TrackList.IndexOf(track) + 1).
-                        @track.Name
+            <br />
+            <h1 class="h1center">@CurrentTrackName</h1>
+            <p class="pcenter">Platform: @CurrentTrackPlatform</p>
+            <p class="pcenter">Year: @CurrentTrackYear</p>
+            <br />
+        </div>
+        <div class="col-lg p-2" style="background-color:white">
+        
+                <ul class="li-ul_center list-group list-group-flush">
+                    <li class="li-ul_center list-group-item">
+                        <audio class="audiocenter"
+                                id="audioPlayer"
+                                controls="controls"
+                                controlsList="noplaybackrate nodownload"
+                                @onended="TrackEndedEvent"
+                                @onplay="PausePlayEvent"
+                                @onpause="PausePlayEvent">
+                        </audio>
                     </li>
+                @if (TrackList != null && IsTrackListLoaded)
+                {
+                    @foreach (var track in TrackList)
+                    {
+                        <li class="li-ul_center list-group-item @BackgroundTextColor(track) @BackgroundColor(track)"
+                            role="button" 
+                            onclick="@(() => ChangeSong(track))">
+
+                            <span 
+                                class="@track.State">
+                            </span>
+
+                            @(TrackList.IndexOf(track) + 1).
+                            @track.Name
+                        </li>
+                    }
                 }
-            </ul>
-        }
+                else
+                {
+                    <li />
+                    <li class="h1center"><div class="lds-dual-ring"></div></li>
+                    <li class="h1article text-secondary">Loading...</li>
+                }
+                </ul>
+        </div>
     </div>
 </div>
 
@@ -63,31 +70,54 @@
     private List<Sound> _trackList = new();
     private Sound? _currentTrack;
     private bool _isAutoplay;
+    private bool _isTrackListLoaded;
     #endregion
 
     #region [Initialization]
-    protected override async void OnInitialized()
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     FileStream jsonStream = File.OpenRead("wwwroot/playlist_main.json");
+
+    //     TrackList = await JsonSerializer.DeserializeAsync<List<Sound>>(jsonStream) ?? new();
+
+    //     await InvokeAsync(StateHasChanged);
+    // }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        FileStream jsonStream = File.OpenRead("wwwroot/playlist_main.json");
+        if (firstRender)
+        {
+            FileStream jsonStream = File.OpenRead("wwwroot/playlist_main.json");
 
-        TrackList = await JsonSerializer.DeserializeAsync<List<Sound>>(jsonStream) ?? new();
+            //Thread.Sleep(50);
 
-        CurrentTrack = TrackList.FirstOrDefault();
+            TrackList = await JsonSerializer.DeserializeAsync<List<Sound>>(jsonStream) ?? new();
 
-        await InvokeAsync(StateHasChanged);
+            IsTrackListLoaded = true;
+
+            CurrentTrack = await SetCurrentTrackAsync(TrackList.FirstOrDefault());
+
+            await InvokeAsync(StateHasChanged);
+        }
     }
     #endregion
 
     #region [Properties]
-    public string? SongPath
-    {
-        get { return CurrentTrack != null ? CurrentTrack.Url : ""; }
-    }
+    // public string? SongPath
+    // {
+    //     get { return CurrentTrack != null ? CurrentTrack.Url : ""; }
+    // }
 
     public List<Sound> TrackList
     {
         get { return _trackList; }
         set { _trackList = value; }
+    }
+
+    public bool IsTrackListLoaded
+    {
+        get { return _isTrackListLoaded; }
+        set { _isTrackListLoaded = value; }
     }
 
     public Sound? CurrentTrack
@@ -131,17 +161,18 @@
     #region [Events]
     private async void ChangeSong(Sound track)
     {
-        if (!IsAutoplay)
-            IsAutoplay = await SetAutoplayAsync(true);
-
         if (CurrentTrack == track)
         {
-            await JS.InvokeAsync<object>("ChangePlayerState");
+            await JS.InvokeVoidAsync("ChangePlayerState", CurrentTrack.Url);
         }
         else
         {
-            CurrentTrack = TrackList.Where(sound => sound == track).FirstOrDefault();
+            CurrentTrack = await SetCurrentTrackAsync(TrackList.Where(sound => sound == track).FirstOrDefault());
         }
+
+        if (!IsAutoplay)
+            IsAutoplay = await SetAutoplayAsync(true);
+
 
         await InvokeAsync(StateHasChanged);
     }
@@ -170,7 +201,7 @@
 
         if (nextTrackNum != 0 && TrackList.Count > nextTrackNum)
         {
-            CurrentTrack = TrackList[nextTrackNum];
+            CurrentTrack = await SetCurrentTrackAsync(TrackList[nextTrackNum]);
         }
         else
         {
@@ -178,7 +209,7 @@
 
             await InvokeAsync(StateHasChanged);
 
-            CurrentTrack = TrackList.FirstOrDefault();
+            CurrentTrack = await SetCurrentTrackAsync(TrackList.FirstOrDefault());
         }
 
         await InvokeAsync(StateHasChanged);
@@ -198,9 +229,17 @@
 
     private async Task<bool> SetAutoplayAsync(bool isAutoplay)
     {
-        await JS.InvokeAsync<object>("SetAutoPlay", isAutoplay);
+        await JS.InvokeVoidAsync("SetAutoPlay", isAutoplay);
 
         return isAutoplay;
+    }
+
+    private async Task<Sound?> SetCurrentTrackAsync(Sound? track)
+    {
+        if (track != null)
+            await JS.InvokeVoidAsync("SetSrc", track.Url);
+
+        return track;
     }
     #endregion
 }

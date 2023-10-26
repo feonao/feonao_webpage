@@ -2,26 +2,34 @@
 
 <PageTitle>Videos</PageTitle>
 
-<div class="row">
-    <div class="column" style="background-color:black">
-        <iframe src="@CurrentPath" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
-    <div class="column" style="background-color:white">
-        @if (TrackList != null)
-        {
-            <ul class="li-ul_center list-group list-group-flush">
-                @foreach (var video in TrackList)
-                {
-                    <li class="li-ul_center list-group-item @BackgroundTextColor(video) @BackgroundColor(video)"
-                        role="button"
-                        onclick="@(() => ChangeVideo(video))">
+<div class="container">
+    <div class="row">
+        <div class="col-lg p-2" style="background-color:black">
+            <iframe src="@CurrentPath" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="col-lg p-2" style="background-color:white">
+            @if (TrackList != null && IsTrackListLoaded)
+            {
+                <ul class="li-ul_center list-group list-group-flush">
+                    @foreach (var video in TrackList)
+                    {
+                        <li class="li-ul_center list-group-item @BackgroundTextColor(video) @BackgroundColor(video)"
+                            role="button"
+                            onclick="@(() => ChangeVideo(video))">
 
-                        @(TrackList.IndexOf(video) + 1).
-                        @video.Name
-                    </li>
-                }
-            </ul>
-        }
+                            @(TrackList.IndexOf(video) + 1).
+                            @video.Name
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <br />
+                <div class="h1center"><div class="lds-dual-ring"></div></div>
+                <div class="h1article text-secondary">Loading...</div>
+            }
+        </div>
     </div>
 </div>
 
@@ -33,18 +41,37 @@
     #region [Private fields]
     private List<Video> _trackList = new();
     private Video? _currentVideo;
+    private bool _isTrackListLoaded;
     #endregion
 
     #region [Initialization]
-    protected override async void OnInitialized()
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     FileStream jsonStream = File.OpenRead("wwwroot/videolist_main.json");
+
+    //     TrackList = await JsonSerializer.DeserializeAsync<List<Video>>(jsonStream) ?? new();
+
+    //     CurrentVideo = TrackList.FirstOrDefault();
+
+    //     await InvokeAsync(StateHasChanged);
+    // }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        FileStream jsonStream = File.OpenRead("wwwroot/videolist_main.json");
+        if (firstRender)
+        {
+            FileStream jsonStream = File.OpenRead("wwwroot/videolist_main.json");
 
-        TrackList = await JsonSerializer.DeserializeAsync<List<Video>>(jsonStream) ?? new();
+            //Thread.Sleep(1000);
 
-        CurrentVideo = TrackList.FirstOrDefault();
+            TrackList = await JsonSerializer.DeserializeAsync<List<Video>>(jsonStream) ?? new();
 
-        await InvokeAsync(StateHasChanged);
+            IsTrackListLoaded = true;
+
+            CurrentVideo = TrackList.FirstOrDefault();
+
+            await InvokeAsync(StateHasChanged);
+        }
     }
     #endregion
 
@@ -53,6 +80,12 @@
     {
         get { return _trackList; }
         set { _trackList = value; }
+    }
+
+    public bool IsTrackListLoaded
+    {
+        get { return _isTrackListLoaded; }
+        set { _isTrackListLoaded = value; }
     }
 
     public Video? CurrentVideo
