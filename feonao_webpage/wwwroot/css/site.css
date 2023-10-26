@@ -202,18 +202,6 @@ iframe {
     aspect-ratio: 16 / 9;
 }
 
-.column {
-    float: left;
-    width: 50%;
-    padding: 10px;
-}
-
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
 .divBorder {
     background: #778899;
     outline: 5px solid grey;
@@ -253,18 +241,6 @@ iframe {
 
     100% {
         transform: rotate(360deg);
-    }
-}
-
-@media only screen and (max-width: 960px){
-    .column {
-        margin: auto;
-        width: 96%;
-        padding: 5px;
-    }
-
-    .row:after {
-        
     }
 }
 

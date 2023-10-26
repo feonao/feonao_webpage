@@ -2,32 +2,34 @@
 
 <PageTitle>Videos</PageTitle>
 
-<div class="row">
-    <div class="column" style="background-color:black">
-        <iframe src="@CurrentPath" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
-    <div class="column" style="background-color:white">
-        @if (TrackList != null && IsTrackListLoaded)
-        {
-            <ul class="li-ul_center list-group list-group-flush">
-                @foreach (var video in TrackList)
-                {
-                    <li class="li-ul_center list-group-item @BackgroundTextColor(video) @BackgroundColor(video)"
-                        role="button"
-                        onclick="@(() => ChangeVideo(video))">
+<div class="container">
+    <div class="row">
+        <div class="col-lg p-2" style="background-color:black">
+            <iframe src="@CurrentPath" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="col-lg p-2" style="background-color:white">
+            @if (TrackList != null && IsTrackListLoaded)
+            {
+                <ul class="li-ul_center list-group list-group-flush">
+                    @foreach (var video in TrackList)
+                    {
+                        <li class="li-ul_center list-group-item @BackgroundTextColor(video) @BackgroundColor(video)"
+                            role="button"
+                            onclick="@(() => ChangeVideo(video))">
 
-                        @(TrackList.IndexOf(video) + 1).
-                        @video.Name
-                    </li>
-                }
-            </ul>
-        }
-        else
-        {
-            <br />
-            <div class="h1center"><div class="lds-dual-ring"></div></div>
-            <div class="h1article text-secondary">Loading...</div>
-        }
+                            @(TrackList.IndexOf(video) + 1).
+                            @video.Name
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <br />
+                <div class="h1center"><div class="lds-dual-ring"></div></div>
+                <div class="h1article text-secondary">Loading...</div>
+            }
+        </div>
     </div>
 </div>
 

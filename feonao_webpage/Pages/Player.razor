@@ -4,56 +4,58 @@
 
 <PageTitle>@PageTitleName</PageTitle>
 
-<div class="row">
-    <div class="column" style="background-color:black">
-        <div class="divBorder">
-            <p class="fitText">No image</p>
-            <img src="@CurrentTrackArtwork" class="fit" />
+<div class="container">
+    <div class="row">
+        <div class="col-lg p-2" style="background-color:black">
+            <div class="divBorder">
+                <p class="fitText">No image</p>
+                <img src="@CurrentTrackArtwork" class="fit" />
+            </div>
+        
+            <br />
+            <h1 class="h1center">@CurrentTrackName</h1>
+            <p class="pcenter">Platform: @CurrentTrackPlatform</p>
+            <p class="pcenter">Year: @CurrentTrackYear</p>
+            <br />
         </div>
+        <div class="col-lg p-2" style="background-color:white">
         
-        <br />
-        <h1 class="h1center">@CurrentTrackName</h1>
-        <p class="pcenter">Platform: @CurrentTrackPlatform</p>
-        <p class="pcenter">Year: @CurrentTrackYear</p>
-        <br />
-    </div>
-    <div class="column" style="background-color:white">
-        
-            <ul class="li-ul_center list-group list-group-flush">
-                <li class="li-ul_center list-group-item">
-                    <audio class="audiocenter"
-                            id="audioPlayer"
-                            controls="controls"
-                            controlsList="noplaybackrate nodownload"
-                            @onended="TrackEndedEvent"
-                            @onplay="PausePlayEvent"
-                            @onpause="PausePlayEvent">
-                    </audio>
-                </li>
-            @if (TrackList != null && IsTrackListLoaded)
-            {
-                @foreach (var track in TrackList)
-                {
-                    <li class="li-ul_center list-group-item @BackgroundTextColor(track) @BackgroundColor(track)"
-                        role="button" 
-                        onclick="@(() => ChangeSong(track))">
-
-                        <span 
-                            class="@track.State">
-                        </span>
-
-                        @(TrackList.IndexOf(track) + 1).
-                        @track.Name
+                <ul class="li-ul_center list-group list-group-flush">
+                    <li class="li-ul_center list-group-item">
+                        <audio class="audiocenter"
+                                id="audioPlayer"
+                                controls="controls"
+                                controlsList="noplaybackrate nodownload"
+                                @onended="TrackEndedEvent"
+                                @onplay="PausePlayEvent"
+                                @onpause="PausePlayEvent">
+                        </audio>
                     </li>
+                @if (TrackList != null && IsTrackListLoaded)
+                {
+                    @foreach (var track in TrackList)
+                    {
+                        <li class="li-ul_center list-group-item @BackgroundTextColor(track) @BackgroundColor(track)"
+                            role="button" 
+                            onclick="@(() => ChangeSong(track))">
+
+                            <span 
+                                class="@track.State">
+                            </span>
+
+                            @(TrackList.IndexOf(track) + 1).
+                            @track.Name
+                        </li>
+                    }
                 }
-            }
-            else
-            {
-                <li />
-                <li class="h1center"><div class="lds-dual-ring"></div></li>
-                <li class="h1article text-secondary">Loading...</li>
-            }
-            </ul>
+                else
+                {
+                    <li />
+                    <li class="h1center"><div class="lds-dual-ring"></div></li>
+                    <li class="h1article text-secondary">Loading...</li>
+                }
+                </ul>
+        </div>
     </div>
 </div>
 
