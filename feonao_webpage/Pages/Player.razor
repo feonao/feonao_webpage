@@ -8,18 +8,18 @@
     <div class="row">
         <div class="col-lg p-2" style="background-color:black">
             <div class="border-box">
-                <p class="text-middle font-tahoma text-white fs-5">No image</p>
+                <p class="text-middle font-main text-white fs-5">No image</p>
                 <img src="@CurrentTrackArtwork" class="m-auto w-100 position-absolute top-0" />
             </div>
         
-            <p class="text-center fs-4 font-tahoma text-white mt-3">@CurrentTrackName</p>
-            <p class="text-center fs-5 font-tahoma text-white">Platform: @CurrentTrackPlatform</p>
-            <p class="text-center fs-5 font-tahoma text-white">Year: @CurrentTrackYear</p>
+            <p class="text-center fs-4 font-main text-white mt-3">@CurrentTrackName</p>
+            <p class="text-center fs-5 font-main text-white">Platform: @CurrentTrackPlatform</p>
+            <p class="text-center fs-5 font-main text-white">Year: @CurrentTrackYear</p>
         </div>
         <div class="col-lg p-2" style="background-color:white">
         
-                <ul class="text-black font-tahoma fs-5 list-group list-group-flush">
-                <li class="text-black font-tahoma fs-5 list-group-item">
+                <ul class="text-black font-main fs-5 list-group list-group-flush">
+                <li class="text-black font-main fs-5 list-group-item">
                         <audio class="w-100 bg-white"
                                 id="audioPlayer"
                                 controls="controls"
@@ -33,7 +33,7 @@
                 {
                     @foreach (var track in TrackList)
                     {
-                        <li class="fs-5 font-tahoma list-group-item @BackgroundTextColor(track) @BackgroundColor(track)"
+                        <li class="fs-5 font-main list-group-item @BackgroundTextColor(track) @BackgroundColor(track)"
                             role="button" 
                             onclick="@(() => ChangeSong(track))">
 

@@ -10,10 +10,10 @@
         <div class="col-lg p-2" style="background-color:white">
             @if (TrackList != null && IsTrackListLoaded)
             {
-                <ul class="text-black font-tahoma fs-5 list-group list-group-flush">
+                <ul class="text-black font-main fs-5 list-group list-group-flush">
                     @foreach (var video in TrackList)
                     {
-                        <li class="fs-5 font-tahoma list-group-item @BackgroundTextColor(video) @BackgroundColor(video)"
+                        <li class="fs-5 font-main list-group-item @BackgroundTextColor(video) @BackgroundColor(video)"
                             role="button"
                             onclick="@(() => ChangeVideo(video))">
 

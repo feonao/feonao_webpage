@@ -10,8 +10,8 @@ body {
     display: none;
 }
 
-.font-tahoma {
-    font-family: Tahoma
+.font-main {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 
