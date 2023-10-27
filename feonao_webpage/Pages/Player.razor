@@ -7,22 +7,20 @@
 <div class="container">
     <div class="row">
         <div class="col-lg p-2" style="background-color:black">
-            <div class="divBorder">
-                <p class="fitText">No image</p>
-                <img src="@CurrentTrackArtwork" class="fit" />
+            <div class="border-box">
+                <p class="text-middle font-tahoma text-white fs-5">No image</p>
+                <img src="@CurrentTrackArtwork" class="m-auto w-100 position-absolute top-0" />
             </div>
         
-            <br />
-            <h1 class="h1center">@CurrentTrackName</h1>
-            <p class="pcenter">Platform: @CurrentTrackPlatform</p>
-            <p class="pcenter">Year: @CurrentTrackYear</p>
-            <br />
+            <p class="text-center fs-4 font-tahoma text-white mt-3">@CurrentTrackName</p>
+            <p class="text-center fs-5 font-tahoma text-white">Platform: @CurrentTrackPlatform</p>
+            <p class="text-center fs-5 font-tahoma text-white">Year: @CurrentTrackYear</p>
         </div>
         <div class="col-lg p-2" style="background-color:white">
         
-                <ul class="li-ul_center list-group list-group-flush">
-                    <li class="li-ul_center list-group-item">
-                        <audio class="audiocenter"
+                <ul class="text-black font-tahoma fs-5 list-group list-group-flush">
+                <li class="text-black font-tahoma fs-5 list-group-item">
+                        <audio class="w-100 bg-white"
                                 id="audioPlayer"
                                 controls="controls"
                                 controlsList="noplaybackrate nodownload"
@@ -35,7 +33,7 @@
                 {
                     @foreach (var track in TrackList)
                     {
-                        <li class="li-ul_center list-group-item @BackgroundTextColor(track) @BackgroundColor(track)"
+                        <li class="fs-5 font-tahoma list-group-item @BackgroundTextColor(track) @BackgroundColor(track)"
                             role="button" 
                             onclick="@(() => ChangeSong(track))">
 
@@ -50,18 +48,15 @@
                 }
                 else
                 {
-                    <li />
-                    <li class="h1center"><div class="lds-dual-ring"></div></li>
-                    <li class="h1article text-secondary">Loading...</li>
+                    <li class="text-center mt-3"><div class="lds-dual-ring"></div></li>
+                    <li class="text-center fs-4 text-secondary">Loading...</li>
                 }
                 </ul>
         </div>
     </div>
 </div>
 
-<br />
-
-<p class="copyright">Copyright ©@DateTime.Now.Year feonao. All rights reserved.</p>
+<p class="fs-6 mt-3 text-center">Copyright ©@DateTime.Now.Year feonao. All rights reserved.</p>
 
 @code
 {
