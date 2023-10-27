@@ -10,62 +10,10 @@ body {
     display: none;
 }
 
-.audiocenter {
-    width: 100%;
-    background-color: white;
-    line-height: 0em;
+.font-tahoma {
+    font-family: Tahoma
 }
 
-.h1center {
-    font-size: 25px;
-    font-family: verdana;
-    color: white;
-    text-align: center;
-    margin-bottom: 0.8em;
-}
-
-.h1article {
-    font-size: 25px;
-    font-family: verdana;
-    color: black;
-    text-align: center;
-    height: 1.1em;
-}
-
-.pcenter {
-    color: white;
-    text-align: center;
-    font-family: verdana;
-    font-size: 20px;
-}
-
-.pfill {
-    margin: 0.5em;
-    color: black;
-    text-align: justify-all;
-    font-family: verdana;
-    font-size: 20px;
-    width: 100%;
-    height: contain;
-}
-
-.spannav {
-    width: 15px;
-    text-align: center;
-}
-
-.copyright {
-    color: black;
-    text-align: center;
-    font-family: verdana;
-    font-size: 15px;
-}
-
-.li-ul_center {
-    color: black;
-    font-family: verdana;
-    font-size: 20px;
-}
 
 h1:focus {
     outline: none;
@@ -163,27 +111,7 @@ a, .btn-link {
         content: var(--blazor-load-percentage-text, "Loading");
     }
 
-.center {
-    margin: auto;
-    width: 50%;
-}
-
-.fit {
-    margin: auto;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-}
-
-.fill {
-    margin: auto;
-    width: 100%;
-}
-
-.fitText {
+.text-middle {
     margin: auto;
     width: 100px;
     height: 60px;
@@ -191,9 +119,6 @@ a, .btn-link {
     position: absolute;
     top: calc(50% - 30px);
     left: calc(50% - 50px);
-    color: white;
-    font-family: verdana;
-    font-size: 25px;
 }
 
 iframe {
@@ -202,19 +127,13 @@ iframe {
     aspect-ratio: 16 / 9;
 }
 
-.divBorder {
+.border-box {
     background: #778899;
     outline: 5px solid grey;
     width: 100%;
     padding-top: 100%;
     position: relative;
 }
-
-.divMain {
-    width: 100%;
-    position: relative;
-}
-
 
 .lds-dual-ring {
     display: inline-block;

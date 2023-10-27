@@ -1,6 +1,6 @@
 ﻿@page "/video"
 
-<PageTitle>Videos</PageTitle>
+<PageTitle>feonao - Videos</PageTitle>
 
 <div class="container">
     <div class="row">
@@ -10,10 +10,10 @@
         <div class="col-lg p-2" style="background-color:white">
             @if (TrackList != null && IsTrackListLoaded)
             {
-                <ul class="li-ul_center list-group list-group-flush">
+                <ul class="text-black font-tahoma fs-5 list-group list-group-flush">
                     @foreach (var video in TrackList)
                     {
-                        <li class="li-ul_center list-group-item @BackgroundTextColor(video) @BackgroundColor(video)"
+                        <li class="fs-5 font-tahoma list-group-item @BackgroundTextColor(video) @BackgroundColor(video)"
                             role="button"
                             onclick="@(() => ChangeVideo(video))">
 
@@ -25,17 +25,14 @@
             }
             else
             {
-                <br />
-                <div class="h1center"><div class="lds-dual-ring"></div></div>
-                <div class="h1article text-secondary">Loading...</div>
+                <div class="text-center mt-3"><div class="lds-dual-ring"></div></div>
+                <div class="text-center fs-4 text-secondary">Loading...</div>
             }
         </div>
     </div>
 </div>
 
-<br />
-
-<p class="copyright">Copyright ©@DateTime.Now.Year feonao. All rights reserved.</p>
+<p class="fs-6 mt-3 text-center">Copyright ©@DateTime.Now.Year feonao. All rights reserved.</p>
 
 @code {
     #region [Private fields]
