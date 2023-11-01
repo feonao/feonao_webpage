@@ -6,29 +6,27 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-lg p-2" style="background-color:black">
+        <div class="col-lg p-2 bg-dark">
             <div class="border-box">
-                <p class="text-middle font-main text-white fs-5">No image</p>
+                <p class="text-middle font-main text-light fs-5">No image</p>
                 <img src="@CurrentTrackArtwork" class="m-auto w-100 position-absolute top-0" />
             </div>
-        
-            <p class="text-center fs-4 font-main text-white mt-3">@CurrentTrackName</p>
-            <p class="text-center fs-5 font-main text-white">Platform: @CurrentTrackPlatform</p>
-            <p class="text-center fs-5 font-main text-white">Year: @CurrentTrackYear</p>
+
+            <p class="text-center fs-4 font-main text-light mt-3">@CurrentTrackName</p>
+            <p class="text-center fs-5 font-main text-light">Platform: @CurrentTrackPlatform</p>
+            <p class="text-center fs-5 font-main text-light">Year: @CurrentTrackYear</p>
         </div>
-        <div class="col-lg p-2" style="background-color:white">
-        
-                <ul class="text-black font-main fs-5 list-group list-group-flush">
-                <li class="text-black font-main fs-5 list-group-item">
-                        <audio class="w-100 bg-white"
-                                id="audioPlayer"
-                                controls="controls"
-                                controlsList="noplaybackrate nodownload"
-                                @onended="TrackEndedEvent"
-                                @onplay="PausePlayEvent"
-                                @onpause="PausePlayEvent">
-                        </audio>
-                    </li>
+        <div class="col-lg p-2 bg-dark">
+            <audio class="w-100 bg-dark m-1"
+                id="audioPlayer"
+                controls="controls"
+                controlsList="noplaybackrate nodownload"
+                @onended="TrackEndedEvent"
+                @onplay="PausePlayEvent"
+                @onpause="PausePlayEvent">
+            </audio>
+
+            <ul class="text-light font-main fs-5 list-group list-group-flush bg-dark ">
                 @if (TrackList != null && IsTrackListLoaded)
                 {
                     @foreach (var track in TrackList)

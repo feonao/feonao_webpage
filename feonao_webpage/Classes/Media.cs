@@ -39,7 +39,7 @@
             }
             else
             {
-                return "bg-white";
+                return "bg-dark";
             }
         }
 
@@ -47,11 +47,11 @@
         {
             if (isCurrent)
             {
-                return "text-white";
+                return "text-dark";
             }
             else
             {
-                return "text-dark";
+                return "text-light";
             }
         }
     }
