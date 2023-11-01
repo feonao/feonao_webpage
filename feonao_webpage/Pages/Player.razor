@@ -6,18 +6,20 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-lg p-2 bg-dark">
+        <div class="col-lg pt-lg-2 bg-dark">
             <div class="border-box">
                 <p class="text-middle font-main text-light fs-5">No image</p>
                 <img src="@CurrentTrackArtwork" class="m-auto w-100 position-absolute top-0" />
             </div>
 
-            <p class="text-center fs-4 font-main text-light mt-3">@CurrentTrackName</p>
-            <p class="text-center fs-5 font-main text-light">Platform: @CurrentTrackPlatform</p>
-            <p class="text-center fs-5 font-main text-light">Year: @CurrentTrackYear</p>
+            <div class="p-0 m-0">
+                <p class="text-center fs-4 font-main text-light mt-3">@CurrentTrackName</p>
+                <p class="text-center fs-5 font-main text-light">Platform: @CurrentTrackPlatform</p>
+                <p class="text-center fs-5 font-main text-light">Year: @CurrentTrackYear</p>
+            </div>
         </div>
-        <div class="col-lg p-2 bg-dark">
-            <audio class="w-100 bg-dark m-1"
+        <div class="col-lg pt-lg-2 bg-dark">
+            <audio class="w-100 bg-dark m-1 mb-4 mb-md-4 mb-sm-4 mb-lg-1"
                 id="audioPlayer"
                 controls="controls"
                 controlsList="noplaybackrate nodownload"
@@ -54,7 +56,7 @@
     </div>
 </div>
 
-<p class="fs-6 mt-3 text-center">Copyright ©@DateTime.Now.Year feonao. All rights reserved.</p>
+<p class="fs-6 mt-3 text-center text-muted">Copyright ©@DateTime.Now.Year feonao. All rights reserved.</p>
 
 @code
 {
