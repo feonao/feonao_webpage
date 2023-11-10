@@ -1,7 +1,11 @@
-﻿function ChangePlayerState() {
-    var player;
+﻿function GetAudioPlayer() {
+    var player = document.getElementById('audioPlayer');
 
-    player = document.getElementById('audioPlayer');
+    return player;
+}
+
+function ChangePlayerState() {
+    var player = GetAudioPlayer();
 
     if (player.paused) {
         player.play();
@@ -12,17 +16,13 @@
 }
 
 function SetAutoPlay(isEnabled) {
-    var player;
-
-    player = document.getElementById('audioPlayer');
+    var player = GetAudioPlayer();
 
     player.autoplay = isEnabled;
 }
 
 function SetSrc(path) {
-    var player;
-
-    player = document.getElementById('audioPlayer');
+    var player = GetAudioPlayer();
 
     if (player !== null) {
         player.src = path;
