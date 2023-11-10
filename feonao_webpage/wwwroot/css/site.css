@@ -137,7 +137,7 @@ iframe {
     background: grey;
     outline: 5px solid #6c757d;
     width: 100%;
-    padding-top: 100%;
+    aspect-ratio: 1 / 1;
     position: relative;
 }
 
