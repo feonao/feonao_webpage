@@ -5,6 +5,7 @@
         private string playClass = "oi oi-media-play me-2";
         private string pauseClass = "oi oi-media-pause me-2";
 
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Url { get; set; }
         public string? State { get; set; }

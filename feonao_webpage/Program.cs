@@ -1,12 +1,21 @@
+using feonao.Classes;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+
+builder.Services.AddDbContext<DataContext>(options =>
+{
+    options.UseSqlite("Data Source = base.db");
+});
+
+builder.Services.AddScoped<DataService>();
 
 var app = builder.Build();
 
@@ -19,7 +28,7 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    // The default HSTS value is 30 days. You may want to change this for soundion scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 
     app.UseHttpsRedirection();

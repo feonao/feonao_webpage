@@ -1,6 +1,7 @@
 ﻿@page "/music"
 @inject IJSRuntime JS
 @inject IHostEnvironment _env
+@inject DataService service
 
 <PageTitle>@PageTitleName</PageTitle>
 
@@ -84,7 +85,9 @@
 
             //Thread.Sleep(50);
 
-            TrackList = await JsonSerializer.DeserializeAsync<List<Sound>>(jsonStream) ?? new();
+            //TrackList = await JsonSerializer.DeserializeAsync<List<Sound>>(jsonStream) ?? new();
+
+            TrackList = await service.GetSoundAsync() ?? new();
 
             IsTrackListLoaded = true;
 
