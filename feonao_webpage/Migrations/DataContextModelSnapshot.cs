@@ -34,9 +34,6 @@ namespace feonao.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("State")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Url")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -48,6 +45,25 @@ namespace feonao.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Sound");
+                });
+
+            modelBuilder.Entity("feonao.Classes.Video", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Video");
                 });
 #pragma warning restore 612, 618
         }

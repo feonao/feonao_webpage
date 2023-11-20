@@ -14,6 +14,7 @@ namespace feonao.Classes
 
         #region Public properties
         public DbSet<Sound> Sound { get; set; }
+        public DbSet<Video> Video { get; set; }
         #endregion
 
         #region Overidden methods
