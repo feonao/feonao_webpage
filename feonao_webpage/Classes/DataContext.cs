@@ -2,7 +2,7 @@
 
 namespace feonao.Classes
 {
-    public class DataContext : DbContext, IDisposable
+    public class DataContext : DbContext
     {
         #region Contructor
         public DataContext(DbContextOptions<DataContext> options)
@@ -19,11 +19,7 @@ namespace feonao.Classes
         #endregion
 
         #region Overidden methods
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<Sound>().HasData(GetSounds());
-        //    base.OnModelCreating(modelBuilder);
-        //}
+
         #endregion
 
 
