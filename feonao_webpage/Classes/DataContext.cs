@@ -2,7 +2,7 @@
 
 namespace feonao.Classes
 {
-    public class DataContext : DbContext
+    public class DataContext : DbContext, IDisposable
     {
         #region Contructor
         public DataContext(DbContextOptions<DataContext> options)
@@ -15,6 +15,7 @@ namespace feonao.Classes
         #region Public properties
         public DbSet<Sound> Sound { get; set; }
         public DbSet<Video> Video { get; set; }
+        public DbSet<News> News { get; set; }
         #endregion
 
         #region Overidden methods
