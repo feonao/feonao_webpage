@@ -4,34 +4,36 @@
     {
         private string playClass = "oi oi-media-play me-2";
         private string pauseClass = "oi oi-media-pause me-2";
+        private string? _state;
 
+
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Url { get; set; }
-        public string? State { get; set; }
 
         public void SetPause()
         {
-            State = pauseClass;
+            _state = pauseClass;
         }
 
         public void SetPlay()
         {
-            State = playClass;
+            _state = playClass;
         }
 
         public void ChangeState()
         {
-            if (State == pauseClass)
+            if (_state == pauseClass)
             {
-                State = playClass;
+                _state = playClass;
             }
-            else if (State == playClass)
+            else if (_state == playClass)
             {
-                State = pauseClass;
+                _state = pauseClass;
             }
         }
 
-        public String BackgroundColor(bool isCurrent)
+        public string BackgroundColor(bool isCurrent)
         {
             if (isCurrent)
             {
@@ -43,7 +45,7 @@
             }
         }
 
-        public String BackgroundTextColor(bool isCurrent)
+        public string BackgroundTextColor(bool isCurrent)
         {
             if (isCurrent)
             {
@@ -53,6 +55,11 @@
             {
                 return "text-light";
             }
+        }
+
+        public string? GetState()
+        {
+            return _state;
         }
     }
 }

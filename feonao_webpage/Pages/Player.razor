@@ -1,6 +1,7 @@
 ﻿@page "/music"
 @inject IJSRuntime JS
 @inject IHostEnvironment _env
+@inject DataService service
 
 <PageTitle>@PageTitleName</PageTitle>
 
@@ -38,7 +39,7 @@
                             onclick="@(() => ChangeSong(track))">
 
                             <span 
-                                class="@track.State">
+                                class="@track.GetState()">
                             </span>
 
                             @(TrackList.IndexOf(track) + 1).
@@ -80,11 +81,7 @@
     {
         if (firstRender)
         {
-            FileStream jsonStream = File.OpenRead("wwwroot/playlist_main.json");
-
-            //Thread.Sleep(50);
-
-            TrackList = await JsonSerializer.DeserializeAsync<List<Sound>>(jsonStream) ?? new();
+            TrackList = await service.GetSoundAsync() ?? new();
 
             IsTrackListLoaded = true;
 

@@ -1,4 +1,5 @@
 ﻿@page "/video"
+@inject DataService service
 
 <PageTitle>feonao - Videos</PageTitle>
 
@@ -40,26 +41,11 @@
     #endregion
 
     #region [Initialization]
-    // protected override async Task OnInitializedAsync()
-    // {
-    //     FileStream jsonStream = File.OpenRead("wwwroot/videolist_main.json");
-
-    //     TrackList = await JsonSerializer.DeserializeAsync<List<Video>>(jsonStream) ?? new();
-
-    //     CurrentVideo = TrackList.FirstOrDefault();
-
-    //     await InvokeAsync(StateHasChanged);
-    // }
-
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            FileStream jsonStream = File.OpenRead("wwwroot/videolist_main.json");
-
-            //Thread.Sleep(1000);
-
-            TrackList = await JsonSerializer.DeserializeAsync<List<Video>>(jsonStream) ?? new();
+            TrackList = await service.GetVideoAsync() ?? new();
 
             IsTrackListLoaded = true;
 
