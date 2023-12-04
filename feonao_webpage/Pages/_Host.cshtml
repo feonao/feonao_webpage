@@ -20,7 +20,7 @@
     <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
 </head>
 <body>
-    @* <component type="typeof(App)" render-mode="ServerPrerendered" /> *@
+    <component type="typeof(App)" render-mode="ServerPrerendered" />
 
     <div id="blazor-error-ui">
         <environment include="Staging,Soundion">
@@ -36,7 +36,7 @@
     <div id="components-reconnect-modal"></div>
 
     <app>
-        @(await Html.RenderComponentAsync<App>(RenderMode.ServerPrerendered))
+        @* @(await Html.RenderComponentAsync<App>(RenderMode.ServerPrerendered)) *@
     </app>
 
     <script src="_framework/blazor.server.js"></script>
